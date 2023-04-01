@@ -1,7 +1,1 @@
-export const Logo = () => {
-    return (
-        <div>
-            Logo Component
-        </div>
-    )
-}
+export * from './Logo';
