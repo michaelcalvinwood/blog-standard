@@ -9,8 +9,12 @@ export default function Home() {
 
   return <div>
     <div>
-      Hello
-      <Link href="/api/auth/login">Login</Link>
+      {user && <div>
+        Hello {user.email}<br />
+        <Link href="/api/auth/logout">Logout</Link>
+        </div>
+      }
+      {!user && <Link href="/api/auth/login">Login</Link>}
     </div>  
   </div>;
 }
