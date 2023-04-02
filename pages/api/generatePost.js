@@ -5,10 +5,9 @@ export default async function handler(req, res) {
         apiKey: process.env.OPENAI_API_KEY
     });
 
-    const topic = "The ten best places to visit in Europe and why";
-    const keywords = 'European Vacation, Visit Europe';
-    const specialInstructions = 'The response should include the name of at least one restaurant, one hotel, and one tourist attraction for each place.'
-
+    const { topic, keywords, specialInstructions } = req.body;
+    console.log(topic, keywords, specialInstructions);
+    
     const openai = new OpenAIApi(config);
 
     const response = await openai.createCompletion({
@@ -19,7 +18,6 @@ export default async function handler(req, res) {
         The content should be formatted in SEO-friendly HTML.
         The response should include an HTML title and meta description that both include the keywords.
         The response should include the keywords as many times as possible.
-        ${specialInstructions}
         Also generate a list of tags that include the important words and phrases in the response. 
         The list of tags must also include the names of all people, places, companies, and organizations mentioned in the response.
         The return format must be stringified JSON in the following format: {
@@ -30,8 +28,14 @@ export default async function handler(req, res) {
         }`,
     });
 
+    const rawResult = response.data.choices[0].text.split("\n").join('');
     
+    console.log('raw result', rawResult);
 
-    res.status(200).json({post: JSON.parse(response.data.choices[0].text.replaceAll("\n", ""))})
+    const resultObj = JSON.parse(rawResult);
+
+    console.log('resultObj', JSON.stringify(resultObj, null, 4));
+
+    res.status(200).json({post: resultObj})
   }
   

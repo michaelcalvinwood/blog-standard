@@ -10,8 +10,13 @@ export default function NewPost(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const response = await fetch(`/api/generatePost`, {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({topic, keywords, specialInstructions})
         })
         const json = await response.json();
         console.log('RESULT:', json.post);
@@ -19,7 +24,7 @@ export default function NewPost(props) {
     }
 
     return <div>
-        <form>
+        <form onSubmit={handleSubmit}>
             <div></div>
                 <label>
                     <strong>Generate a blog post on the top of:</strong>
