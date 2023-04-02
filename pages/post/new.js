@@ -24,18 +24,18 @@ export default function NewPost(props) {
                 <label>
                     <strong>Generate a blog post on the top of:</strong>
                 </label>
-                <textarea value={topic} onChange={(e) => setTopic(e.target.value)} />
+                <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={(e) => setTopic(e.target.value)} />
             <div>
                 <label>
                     <strong>Targeting the following keywords:</strong>
                 </label>
-                <textarea value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+                <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={(e) => setKeywords(e.target.value)} />
             </div>
             <div>
                 <label>
                     <strong>Special Instructions (optional):</strong>
                 </label>
-                <textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} />
+                <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} />
             </div>
             <button type='submit' className="btn" onSubmit={handleSubmit}>
                 Generate
