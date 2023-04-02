@@ -1,6 +1,10 @@
+import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { Configuration, OpenAIApi } from 'openai';
 
-export default async function handler(req, res) {
+export default withApiAuthRequired (async function handler(req, res) {
+    
+
+
     const config = new Configuration({
         apiKey: process.env.OPENAI_API_KEY
     });
@@ -37,5 +41,5 @@ export default async function handler(req, res) {
     console.log('resultObj', JSON.stringify(resultObj, null, 4));
 
     res.status(200).json({post: resultObj})
-  }
+  })
   
