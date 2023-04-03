@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         availableTokens: 10
       },
       $setOnInsert: {
-        auto0Id: user.sub
+        auth0Id: user.sub
       }
     }, 
       {
