@@ -1,9 +1,10 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function NewPost(props) {
-    const [postContent, setPostContent] = useState('');
+    const router = useRouter();
     const [topic, setTopic] = useState('');
     const [keywords, setKeywords] = useState('');
     const [specialInstructions, setSpecialInstructions] = useState('');
@@ -19,8 +20,10 @@ export default function NewPost(props) {
             body: JSON.stringify({topic, keywords, specialInstructions})
         })
         const json = await response.json();
-        console.log('RESULT:', json.post);
-        setPostContent(json.post.postContent);
+        console.log('RESULT', json);
+        if (json?.postId) {
+            router.push(`/post/${json.postId}`);
+        }
     }
 
     return <div>
@@ -46,10 +49,7 @@ export default function NewPost(props) {
                 Generate
             </button>
         </form>
-        <div 
-            dangerouslySetInnerHTML={{__html: postContent}}
-            className="max-w-screen-sm p-10"
-        ></div>
+       
     </div>
   }
 
