@@ -38,7 +38,7 @@ export const AppLayout = ({children}) => {
                 }
                 </div>
             </div>
-            <div className=''>{children}</div>
+            {children}
         </div>
     )
 }
