@@ -15,9 +15,6 @@ export default withApiAuthRequired (async function handler(req, res) {
 
     if (!userProfile?.availableTokens) return res.status(403);
     
-
-
-
     const config = new Configuration({
         apiKey: process.env.OPENAI_API_KEY
     });
@@ -77,7 +74,7 @@ export default withApiAuthRequired (async function handler(req, res) {
         }
     });
 
-    const post = db.collection("posts").insertOne({
+    const post = await db.collection("posts").insertOne({
         postContent: resultObj?.postContent,
         title: resultObj?.title,
         metaDescription: resultObj?.metaDescription,
