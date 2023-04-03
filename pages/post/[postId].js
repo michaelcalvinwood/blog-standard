@@ -3,7 +3,7 @@ import { AppLayout } from "../../components/AppLayout";
 import clientPromise from "../../lib/mongodb";
 import { ObjectId } from "mongodb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { faHashtag, faTags } from "@fortawesome/free-solid-svg-icons";
 export default function Post(props) {
     console.log('Post props', props);
 
@@ -27,6 +27,15 @@ export default function Post(props) {
 
                 <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">Blog Post</div>
                 <div dangerouslySetInnerHTML={{__html: props.postContent || ""}}></div>
+
+                <div className="text-sm font-bold mt-6 p-2 bg-stone-200 rounded-sm">Tags</div>
+                <div className="flex flex-wrap pt-2 gap-1">
+                    {props.tags.map((tag, i) => {
+                        return <div key={tag + i} className="p-2 rounded-full bg-slate-800 text-white">
+                            <FontAwesomeIcon icon={faTags} /> {tag}
+                        </div>
+                    })}
+                </div>
             </div>
         </div>
     )
