@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Logo } from "../Logo";
 
-export const AppLayout = ({children, availableTokens, posts}) => {
+export const AppLayout = ({children, availableTokens, posts, postId}) => {
     const {user} = useUser();
     
     return (
@@ -27,11 +27,11 @@ export const AppLayout = ({children, availableTokens, posts}) => {
                         <span className="pl-1 ">{availableTokens} tokens available</span>
                     </Link>
                 </div>
-                <div className="flex-1 overflow-auto  bg-gradient-to-b from-slate-800 to-cyan-800">
+                <div className="px-4 flex-1 overflow-auto  bg-gradient-to-b from-slate-800 to-cyan-800">
                     {posts.map(post => {
                         return (
                             <Link 
-                                className="block text-ellipsis overflow-hidden whitespace-nowrap my-1 px-2 bg-white/10 cursor-pointer rounded-sm"
+                                className={`py-1 border border-white/0 block text-ellipsis overflow-hidden whitespace-nowrap my-1 px-2 bg-white/10 cursor-pointer rounded-sm ${postId === post._id ? 'bg-white/20 border-white' : ''}`}
                                 key={post._id} 
                                 href={`/post/${post._id}`}
                             >
