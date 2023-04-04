@@ -27,7 +27,13 @@ export const AppLayout = ({children, availableTokens, posts}) => {
                         <span className="pl-1 ">{availableTokens} tokens available</span>
                     </Link>
                 </div>
-                <div className="flex-1 overflow-auto  bg-gradient-to-b from-slate-800 to-cyan-800">List of all posts</div>
+                <div className="flex-1 overflow-auto  bg-gradient-to-b from-slate-800 to-cyan-800">
+                    {posts.map(post => {
+                        return <Link key={post._id} href={`/post/${post._id}`}>{post.topic}</Link>
+                    })
+
+                    }
+                </div>
                 <div className="bg-cyan-800">
                 {user && <div className=" flex items-center gap border-t border-t-black/50 h-20 px-2">
                     <Image className="mr-2 rounded-full" src={user.picture} alt={user.name} height={50} width={50} />
