@@ -20,16 +20,18 @@ export default withApiAuthRequired (async function handler(req, res) {
     });
 
     const { topic, keywords, specialInstructions } = req.body;
-    console.log(topic, keywords, specialInstructions);
-    
+
+    if (!topic.trim() || !keywords.trim()) return res.status(422);
+    if (topic.length > 100 || keywords.length > 100) return res.status(422);
+
     const openai = new OpenAIApi(config);
 
     const prompt = specialInstructions ? 
-        `Write a long and detailed SEO-friendly blog post about ${topic}, that targets the following comma-separated keywords: ${keywords}.
+        `Write a long and detailed SEO-friendly blog post about ${topic.trim()}, that targets the following comma-separated keywords: ${keywords.trim()}.
         The content should be formatted in SEO-friendly HTML.
         The response should include an HTML title and meta description that both include the keywords.
         The response should include the keywords as many times as possible.
-        ${specialInstructions}
+        ${specialInstructions.trim()}
         Also generate a list of tags that include the important words and phrases in the response. 
         The list of tags must also include the names of all people, places, products, services, companies, and organizations mentioned in the response.
         The return format must be stringified JSON in the following format: {
@@ -38,7 +40,7 @@ export default withApiAuthRequired (async function handler(req, res) {
             "metaDescription" : meta description goes here,
             "tags": array of tags go here
         }` :
-        `Write a long and detailed SEO-friendly blog post about ${topic}, that targets the following comma-separated keywords: ${keywords}.
+        `Write a long and detailed SEO-friendly blog post about ${topic.trim()}, that targets the following comma-separated keywords: ${keywords.trim()}.
         The content should be formatted in SEO-friendly HTML.
         The response should include an HTML title and meta description that both include the keywords.
         The response should include the keywords as many times as possible.
