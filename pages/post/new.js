@@ -4,32 +4,45 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { getAppProps } from "../../utils/getAppProps";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBrain } from "@fortawesome/free-solid-svg-icons";
 
 export default function NewPost(props) {
     const router = useRouter();
     const [topic, setTopic] = useState('');
     const [keywords, setKeywords] = useState('');
     const [specialInstructions, setSpecialInstructions] = useState('');
+    const [generating, setGenerating] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await fetch(`/api/generatePost`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({topic, keywords, specialInstructions})
-        })
-        const json = await response.json();
-        console.log('RESULT', json);
-        if (json?.postId) {
-            router.push(`/post/${json.postId}`);
+        setGenerating(true);
+        try {
+            const response = await fetch(`/api/generatePost`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({topic, keywords, specialInstructions})
+            })
+            const json = await response.json();
+            console.log('RESULT', json);
+            if (json?.postId) {
+                router.push(`/post/${json.postId}`);
+            }
+        } catch (err) {
+            console.error(err);
+            setGenerating(false);
         }
     }
 
     return <div className="h-full overflow-hidden">
-        <div className="w-full h-full flex flex-col overflow-auto">
+        { generating && <div className="text-green-500 flex h-full animate-pulse w-full flex-col justify-center items-center">
+            <FontAwesomeIcon icon={faBrain} className="text-8xl"/>
+            <h6>Generating...</h6>
+        </div>
+        }
+        { !generating && <div className="w-full h-full flex flex-col overflow-auto">
             <form onSubmit={handleSubmit} className="m-auto w-full max-w-screen-sm bg-slate-100 p-4 rounded-md shadow-xl border border-slate-200 shadow-slate-200">
                 <div></div>
                     <label>
@@ -38,7 +51,7 @@ export default function NewPost(props) {
                     <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={(e) => setTopic(e.target.value)} />
                 <div>
                     <label>
-                        <strong>Targeting the following keywords:</strong>
+                        <strong>Targeting the following keywords (separated by a comma):</strong>
                     </label>
                     <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={(e) => setKeywords(e.target.value)} />
                 </div>
@@ -52,7 +65,9 @@ export default function NewPost(props) {
                     Generate
                 </button>
             </form>
-        </div>
+          </div>
+
+        }
        
     </div>
   }
