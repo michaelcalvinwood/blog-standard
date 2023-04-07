@@ -61,7 +61,7 @@ export default function NewPost(props) {
                     </label>
                     <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} />
                 </div>
-                <button type='submit' className="btn" onSubmit={handleSubmit}>
+                <button type='submit' className="btn" onSubmit={handleSubmit} disabled={!topic || !keywords}>
                     Generate
                 </button>
             </form>
