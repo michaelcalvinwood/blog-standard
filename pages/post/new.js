@@ -48,12 +48,17 @@ export default function NewPost(props) {
                     <label>
                         <strong>Generate a blog post on the topic of:</strong>
                     </label>
-                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={(e) => setTopic(e.target.value)} />
+                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={topic} onChange={(e) => setTopic(e.target.value)} maxLength={100}/>
                 <div>
                     <label>
                         <strong>Targeting the following keywords (separated by a comma):</strong>
                     </label>
-                    <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+                    <textarea 
+                        className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" 
+                        value={keywords} 
+                        onChange={(e) => setKeywords(e.target.value)} 
+                        maxLength={100}
+                    />
                 </div>
                 <div>
                     <label>
@@ -61,7 +66,7 @@ export default function NewPost(props) {
                     </label>
                     <textarea className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm" value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} />
                 </div>
-                <button type='submit' className="btn" onSubmit={handleSubmit} disabled={!topic || !keywords}>
+                <button type='submit' className="btn" onSubmit={handleSubmit} disabled={!topic.trim() || !keywords.trim()}>
                     Generate
                 </button>
             </form>
