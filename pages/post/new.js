@@ -37,7 +37,7 @@ export default function NewPost(props) {
     }
 
     return <div className="h-full overflow-hidden">
-        { generating && <div className="text-green-500 flex h-full animate-pulse w-full flex-col justify-center items-center">
+        { !!generating && <div className="text-green-500 flex h-full animate-pulse w-full flex-col justify-center items-center">
             <FontAwesomeIcon icon={faBrain} className="text-8xl"/>
             <h6>Generating...</h6>
         </div>
@@ -79,6 +79,16 @@ NewPost.getLayout = function getLayout(page, pageProps) {
 export const getServerSideProps = withPageAuthRequired({
     async getServerSideProps(ctx) {
         const props = await getAppProps(ctx);
+
+        if (!props.availableTokens) {
+            return {
+                redirect: {
+                    destination: '/token-topup',
+                    permanent: false
+                },
+            }
+        }
+
         return {
             props
         }
