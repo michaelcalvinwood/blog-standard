@@ -4,9 +4,18 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Logo } from "../Logo";
+import { useContext, useEffect } from "react";
+import PostsContext from "../../context/postsContext";
 
-export const AppLayout = ({children, availableTokens, posts, postId}) => {
+export const AppLayout = ({children, availableTokens, posts: postsFromSSR, postId}) => {
+   
     const {user} = useUser();
+
+    const {posts, setPostsFromSSR} = useContext(PostsContext);
+
+    useEffect(() => {
+        setPostsFromSSR(postsFromSSR)
+    }, [postsFromSSR, setPostsFromSSR])
     
     return (
         <div className="grid grid-cols-[300px_1fr] h-screen max-h-screen">

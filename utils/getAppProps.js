@@ -23,6 +23,7 @@ export const getAppProps = async (ctx) => {
     .find({
         userId: user._id
     })
+    .limit(3)
     .sort({
         created: -1
     })
