@@ -9,6 +9,7 @@ export const PostsProvider = ({children}) => {
 
     const setPostsFromSSR = useCallback((postsFromSSR = []) => {
         console.log('postsFromSSR', postsFromSSR);
+        setPosts(postsFromSSR);
     }, [])
 
     return (
