@@ -7,11 +7,12 @@ import { Logo } from "../Logo";
 import { useContext, useEffect } from "react";
 import PostsContext from "../../context/postsContext";
 
+
 export const AppLayout = ({children, availableTokens, posts: postsFromSSR, postId}) => {
    
     const {user} = useUser();
 
-    const {posts, setPostsFromSSR} = useContext(PostsContext);
+    const {posts, setPostsFromSSR, getPosts} = useContext(PostsContext);
 
     useEffect(() => {
         setPostsFromSSR(postsFromSSR)
@@ -47,7 +48,9 @@ export const AppLayout = ({children, availableTokens, posts: postsFromSSR, postI
                                 {post.topic}
                             </Link>)
                     })}
-                    <div className="btn block m-auto mt-2" style={{width: '90%'}}>Load More Posts</div>
+                    <div onClick={() => {
+                        getPosts({lastPostDate: posts[posts.length - 1].created})
+                    }} className="btn block m-auto mt-2" style={{width: '90%'}}>Load More Posts</div>
                 </div>
                 <div className="bg-cyan-800">
                 {!!user && <div className=" flex items-center gap border-t border-t-black/50 h-20 px-2">
