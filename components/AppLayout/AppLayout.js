@@ -46,12 +46,11 @@ export const AppLayout = ({children, availableTokens, posts: postsFromSSR, postI
                             >
                                 {post.topic}
                             </Link>)
-                    })
-
-                    }
+                    })}
+                    <div className="btn block m-auto mt-2" style={{width: '90%'}}>Load More Posts</div>
                 </div>
                 <div className="bg-cyan-800">
-                {user && <div className=" flex items-center gap border-t border-t-black/50 h-20 px-2">
+                {!!user && <div className=" flex items-center gap border-t border-t-black/50 h-20 px-2">
                     <Image className="mr-2 rounded-full" src={user.picture} alt={user.name} height={50} width={50} />
                     <div>
                         <div>{user.email}</div>
